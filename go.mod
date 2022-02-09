@@ -1,3 +1,5 @@
+// +heroku goVersion go1.17
+
 module github.com/GDSC-UIT/job-connection-api
 
 go 1.17
