@@ -12,6 +12,7 @@ var Config *Configuration
 type Configuration struct {
 	Port int `required:"true" envconfig:"PORT"`
 	DatabaseURL string `required:"true" envconfig:"DATABASE_URL"`
+	FirebaseServiceAccount string `required:"true" split_words:"true"`
 }
 
 func loadConfiguration() *Configuration {

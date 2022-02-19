@@ -28,7 +28,7 @@ func ConnectDb() {
 	}
 
 	log.Println("Database connected")
-	db.AutoMigrate(&models.UserProfile{})
+	db.AutoMigrate(&models.User{})
 
 	DBInstance = Database{
 		Db: db,

@@ -6,15 +6,25 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserProfile struct {
-	gorm.Model
-	ID    	string
-	Name  	string
-	Email 	string
-	Photo 	string
+type User struct {
+	ID    			string 			`gorm:"primarykey" json:"id"`
+	Name  			string 			`json:"name"`
+	Email 			string 			`json:"email"`
+	Photo 			string 			`json:"photo"`
+	Bio				string 			`json:"bio"`
+	Location 		string 			`json:"location"`
+	FacebookURL 	string 			`json:"facebook_url"`
+	LinkedinURL 	string			`json:"linkedin_url"`
+	GPA				float64			`json:"gpa"`
+	NumberOfYears 	int				`json:"number_of_years"`
+	Degree			string			`json:"degree"`
+
+	CreatedAt 		time.Time 		`json:"-"`
+  	UpdatedAt 		time.Time		`json:"-"`
+  	DeletedAt		gorm.DeletedAt 	`gorm:"index" json:"-"`
 }
 
-type CompanyProfile struct {
+type Company struct {
 	gorm.Model
 	ID				string
 	Name 			string
@@ -33,7 +43,7 @@ type Skill struct {
 
 type Job struct {
 	gorm.Model
-	CompanyProfile
+	Company
 	Title 		string
 	Address		string
 	Description string
@@ -42,8 +52,8 @@ type Job struct {
 
 type ApplyRequest struct {
 	gorm.Model
-	UserProfile
-	CompanyProfile
+	User
+	Company
 	CV			string
 	Note 		string
 	Closed		bool

@@ -28,7 +28,7 @@ Start the server
 
 ## Demo
 
-https://link.to/demo
+https://jobconnection.herokuapp.com/
 
 ## Tech Stack
 

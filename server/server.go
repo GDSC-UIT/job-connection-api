@@ -2,10 +2,10 @@ package server
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/GDSC-UIT/job-connection-api/conf"
 	"github.com/GDSC-UIT/job-connection-api/server/database"
+	"github.com/GDSC-UIT/job-connection-api/server/middlewares"
 	"github.com/GDSC-UIT/job-connection-api/server/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -17,6 +17,7 @@ type Server struct {
 }
 
 func (server *Server) settings() {
+	middlewares.ConnectFirebase()
 	database.ConnectDb()
 }
 
@@ -28,18 +29,45 @@ func (server *Server) middlewaresInput() {
 func (server *Server) routes() {
 	api := server.app.Group("/api")
 
-	api.Route("/user-profiles",routes.UserProfileRoute)
+	api.Route("/profile",routes.ProfileRoute)
+	api.Route("/users",routes.UserRoute)
 }
 
 func (server *Server) middlewaresOutput(){
 	server.app.Use(func(c *fiber.Ctx) error{
-		return c.SendStatus(http.StatusNotFound)
+		return fiber.NewError(fiber.StatusNotFound,"Not Found")
 	})
 }
 
 func New() *Server {
 	server := &Server {
-		app: fiber.New(),
+		app: fiber.New(fiber.Config{
+			ErrorHandler: func (c *fiber.Ctx,err error) error {
+				// Status code defaults to 500
+				code := fiber.StatusInternalServerError
+
+				// Retrieve the custom status code if it's an fiber.*Error
+				if e, ok := err.(*fiber.Error); ok {
+					code = e.Code
+				}
+
+				// Send custom error page
+				err = c.Status(code).JSON(struct {
+						Data	interface{} `json:"data"`
+						Message	string 		`json:"message"`
+					}{
+						Message: err.Error(),
+					})
+				if err != nil {
+					// In case the SendFile fails
+					return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
+				}
+
+				// Return from handler
+				return nil
+			},
+
+		}),
 	}
 	server.settings()
 	server.middlewaresInput()
