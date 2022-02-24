@@ -64,6 +64,7 @@ func UpdateProfile (c *fiber.Ctx) error {
 		// update
 		current_profile.Name = update_profile.Name
 		current_profile.Email = update_profile.Email
+		current_profile.Phone = update_profile.Phone
 		current_profile.Photo = update_profile.Photo
 		current_profile.Bio = update_profile.Bio
 		current_profile.Location = update_profile.Location
