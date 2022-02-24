@@ -12,6 +12,7 @@ Config `.env` file
 
 ```bash
 DATABASE_URL = YOUR_DATABASE_URL
+JC_FIREBASE_SERVICE_ACCOUNT = YOUR_FIREBASE_SERVICE_ACCOUNT
 ```
 
 Go to the project directory
