@@ -18,17 +18,18 @@ type Database struct {
 var DBInstance Database
 
 func ConnectDb() {
-	db,err := gorm.Open(postgres.Open(conf.Config.DatabaseURL), &gorm.Config{
+	db, err := gorm.Open(postgres.Open(conf.Config.DatabaseURL), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
 
-	if (err !=nil) {
-		log.Fatal("Fail to connect database. \n",err)
+	if err != nil {
+		log.Fatal("Fail to connect database. \n", err)
 		os.Exit(2)
 	}
 
 	log.Println("Database connected")
 	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.Skill{})
 
 	DBInstance = Database{
 		Db: db,

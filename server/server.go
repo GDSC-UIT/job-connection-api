@@ -29,20 +29,21 @@ func (server *Server) middlewaresInput() {
 func (server *Server) routes() {
 	api := server.app.Group("/api")
 
-	api.Route("/profile",routes.ProfileRoute)
-	api.Route("/users",routes.UserRoute)
+	api.Route("/profile", routes.ProfileRoute)
+	api.Route("/users", routes.UserRoute)
+	api.Route("/skills", routes.SkillsRoute)
 }
 
-func (server *Server) middlewaresOutput(){
-	server.app.Use(func(c *fiber.Ctx) error{
-		return fiber.NewError(fiber.StatusNotFound,"Not Found")
+func (server *Server) middlewaresOutput() {
+	server.app.Use(func(c *fiber.Ctx) error {
+		return fiber.NewError(fiber.StatusNotFound, "Not Found")
 	})
 }
 
 func New() *Server {
-	server := &Server {
+	server := &Server{
 		app: fiber.New(fiber.Config{
-			ErrorHandler: func (c *fiber.Ctx,err error) error {
+			ErrorHandler: func(c *fiber.Ctx, err error) error {
 				// Status code defaults to 500
 				code := fiber.StatusInternalServerError
 
@@ -53,11 +54,11 @@ func New() *Server {
 
 				// Send custom error page
 				err = c.Status(code).JSON(struct {
-						Data	interface{} `json:"data"`
-						Message	string 		`json:"message"`
-					}{
-						Message: err.Error(),
-					})
+					Data    interface{} `json:"data"`
+					Message string      `json:"message"`
+				}{
+					Message: err.Error(),
+				})
 				if err != nil {
 					// In case the SendFile fails
 					return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
@@ -66,7 +67,6 @@ func New() *Server {
 				// Return from handler
 				return nil
 			},
-
 		}),
 	}
 	server.settings()
@@ -78,5 +78,5 @@ func New() *Server {
 }
 
 func (server *Server) ListenAndServe() {
-	server.app.Listen(fmt.Sprintf(":%d",conf.Config.Port))
+	server.app.Listen(fmt.Sprintf(":%d", conf.Config.Port))
 }
