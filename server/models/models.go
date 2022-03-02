@@ -26,14 +26,16 @@ type User struct {
 }
 
 type Company struct {
-	gorm.Model
-	ID          string
+	ID          string `gorm:"primarykey" json:"id"`
 	Name        string
 	Email       string
 	Photo       string
 	Address     string
 	WorkingTime string
 	Description string
+	CreatedAt   time.Time      `json:"-"`
+	UpdatedAt   time.Time      `json:"-"`
+	DeletedAt   gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 type Skill struct {
