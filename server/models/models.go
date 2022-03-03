@@ -62,3 +62,14 @@ type ApplyRequest struct {
 	Closed   bool
 	ClosedAt time.Time
 }
+
+type Experience struct {
+	gorm.Model
+	UserID      string
+	CompanyID   string
+	JobTitle    string
+	Description string
+	SkillIds    []int `gorm:"type:integer[]"`
+	From        time.Time
+	To          time.Time
+}
