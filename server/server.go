@@ -34,6 +34,7 @@ func (server *Server) routes() {
 	api.Route("/skills", routes.SkillsRoute)
 	api.Route("/company", routes.CompanyRoute)
 	api.Route("/jobs", routes.JobsRoute)
+	api.Route("/experiences", routes.ExperienceRoute)
 }
 
 func (server *Server) middlewaresOutput() {
