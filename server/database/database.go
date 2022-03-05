@@ -30,6 +30,10 @@ func ConnectDb() {
 	log.Println("Database connected")
 	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Skill{})
+	db.AutoMigrate(&models.Company{})
+	db.AutoMigrate(&models.Job{})
+	db.AutoMigrate(&models.Experience{})
+
 
 	DBInstance = Database{
 		Db: db,

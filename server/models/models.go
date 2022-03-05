@@ -3,6 +3,7 @@ package models
 import (
 	"time"
 
+	pq "github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
@@ -26,14 +27,16 @@ type User struct {
 }
 
 type Company struct {
-	gorm.Model
-	ID          string
+	ID          string `gorm:"primarykey" json:"id"`
 	Name        string
 	Email       string
 	Photo       string
 	Address     string
 	WorkingTime string
 	Description string
+	CreatedAt   time.Time      `json:"-"`
+	UpdatedAt   time.Time      `json:"-"`
+	DeletedAt   gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 type Skill struct {
@@ -44,13 +47,12 @@ type Skill struct {
 
 type Job struct {
 	gorm.Model
-	Company
+	CompanyID   string
 	Title       string
 	Address     string
 	Description string
-	SkillIds    []int
+	SkillIds    pq.Int64Array `gorm:"type:integer[]"`
 }
-
 type ApplyRequest struct {
 	gorm.Model
 	User
@@ -59,4 +61,15 @@ type ApplyRequest struct {
 	Note     string
 	Closed   bool
 	ClosedAt time.Time
+}
+
+type Experience struct {
+	gorm.Model
+	UserID      string
+	CompanyID   string
+	JobTitle    string
+	Description string
+	SkillIds    []int `gorm:"type:integer[]"`
+	From        time.Time
+	To          time.Time
 }
