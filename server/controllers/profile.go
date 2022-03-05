@@ -9,7 +9,7 @@ import (
 
 type Profile struct {
 	Profile interface{} `json:"profile"`
- 	Type string		`json:"type"`
+	Type    string      `json:"type"`
 }
 
 func GetProfile(c *fiber.Ctx) error {
@@ -19,7 +19,7 @@ func GetProfile(c *fiber.Ctx) error {
 	if profile_type == "user" {
 		var user_profile models.User
 		result := database.DBInstance.Db.First(&user_profile, "id = ?", info.ID)
-		if result.RowsAffected !=0 && result.Error != nil {
+		if result.RowsAffected != 0 && result.Error != nil {
 			return fiber.NewError(fiber.StatusInternalServerError, result.Error.Error())
 		}
 		if result.RowsAffected == 0 {
@@ -35,7 +35,7 @@ func GetProfile(c *fiber.Ctx) error {
 		}
 		return c.JSON(Profile{
 			Profile: user_profile,
-			Type: profile_type,
+			Type:    profile_type,
 		})
 	} else {
 		return c.JSON(Profile{
@@ -44,7 +44,7 @@ func GetProfile(c *fiber.Ctx) error {
 	}
 }
 
-func UpdateProfile (c *fiber.Ctx) error {
+func UpdateProfile(c *fiber.Ctx) error {
 	info := c.Locals("info").(middlewares.UserInfo)
 	profile_type := c.Locals("type").(string)
 
@@ -52,12 +52,12 @@ func UpdateProfile (c *fiber.Ctx) error {
 		var update_profile models.User
 
 		if err := c.BodyParser(&update_profile); err != nil {
-			return fiber.NewError(fiber.StatusInternalServerError,err.Error())
+			return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 		}
 
 		var current_profile models.User
 		result := database.DBInstance.Db.First(&current_profile, "id = ?", info.ID)
-		if result.RowsAffected !=0 && result.Error != nil {
+		if result.RowsAffected != 0 && result.Error != nil {
 			return fiber.NewError(fiber.StatusInternalServerError, result.Error.Error())
 		}
 
@@ -76,10 +76,10 @@ func UpdateProfile (c *fiber.Ctx) error {
 
 		result = database.DBInstance.Db.Save(&current_profile)
 		if result.Error != nil {
-			return fiber.NewError(fiber.StatusBadRequest,result.Error.Error())
+			return fiber.NewError(fiber.StatusBadRequest, result.Error.Error())
 		}
 		return c.JSON(json{
-			Data: current_profile,
+			Data:    current_profile,
 			Message: "Profile update successful",
 		})
 	} else {

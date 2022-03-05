@@ -8,5 +8,5 @@ import (
 
 func ProfileRoute(router fiber.Router) {
 	router.Get("/", middlewares.FirebaseAuthHandler(), controllers.GetProfile)
-	router.Put("/",middlewares.FirebaseAuthHandler(),controllers.UpdateProfile)
+	router.Put("/", middlewares.FirebaseAuthHandler(), controllers.UpdateProfile)
 }
