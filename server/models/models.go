@@ -55,12 +55,12 @@ type Job struct {
 
 type ApplyRequest struct {
 	gorm.Model
-	User
-	Company
-	CV       string
-	Note     string
-	Closed   bool
-	ClosedAt time.Time
+	UserID    string
+	CompanyID string
+	CV        string
+	Note      string
+	Closed    bool
+	ClosedAt  time.Time
 }
 
 type Experience struct {

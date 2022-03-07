@@ -32,7 +32,7 @@ func ConnectDb() {
 	db.AutoMigrate(&models.Skill{})
 	db.AutoMigrate(&models.Company{})
 	db.AutoMigrate(&models.Experience{})
-
+	db.AutoMigrate(&models.ApplyRequest{})
 	DBInstance = Database{
 		Db: db,
 	}
