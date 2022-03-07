@@ -10,4 +10,7 @@ services:
         ports:
             - 5432:5432
         volumes:
-            - /pgdata:/pgdata
+            - jcdatabase:/pgdata
+volumes:
+    jcdatabase:
+        name: jcdatabase

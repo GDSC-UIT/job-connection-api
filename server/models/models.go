@@ -3,6 +3,7 @@ package models
 import (
 	"time"
 
+	pq "github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
@@ -46,13 +47,12 @@ type Skill struct {
 
 type Job struct {
 	gorm.Model
-	Company
+	CompanyID   string
 	Title       string
 	Address     string
 	Description string
-	SkillIds    []int
+	SkillIds    pq.Int64Array `gorm:"type:integer[]"`
 }
-
 type ApplyRequest struct {
 	gorm.Model
 	UserID    string
