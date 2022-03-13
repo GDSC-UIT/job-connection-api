@@ -63,11 +63,6 @@ func ConnectFirebase() {
 
 			c.Locals("info", userInfo)
 
-			if token.Claims["type"] == "company" {
-				c.Locals("type", "company")
-			} else {
-				c.Locals("type", "user")
-			}
 			return c.Next()
 		}
 	}

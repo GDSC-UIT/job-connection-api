@@ -7,10 +7,15 @@ import (
 	"gorm.io/gorm"
 )
 
+type AccountType struct {
+	UserID string `gorm:"primarykey" json:"user_id"`
+	Type   string `json:"type"`
+}
+
 type User struct {
 	ID            string  `gorm:"primarykey" json:"id"`
 	Name          string  `json:"name"`
-	Email         string  `json:"email"`
+	Email         string  `json:"email"  gorm:"unique"`
 	Phone         string  `json:"phone"`
 	Photo         string  `json:"photo"`
 	Bio           string  `json:"bio"`
@@ -27,13 +32,14 @@ type User struct {
 }
 
 type Company struct {
-	ID          string `gorm:"primarykey" json:"id"`
-	Name        string
-	Email       string
-	Photo       string
-	Address     string
-	WorkingTime string
-	Description string
+	ID          string         `json:"id" gorm:"primarykey"`
+	Name        string         `json:"name"`
+	Email       string         `json:"email" gorm:"unique"`
+	Photo       string         `json:"photo"`
+	Address     string         `json:"address"`
+	WorkingTime string         `json:"working_time"`
+	Description string         `json:"description"`
+	Approved    bool           `json:"approved"`
 	CreatedAt   time.Time      `json:"-"`
 	UpdatedAt   time.Time      `json:"-"`
 	DeletedAt   gorm.DeletedAt `gorm:"index" json:"-"`
