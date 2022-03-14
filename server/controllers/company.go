@@ -91,6 +91,7 @@ func UpdateCompany(context *fiber.Ctx) error {
 	current_info.Email = update_info.Email
 	current_info.Photo = update_info.Photo
 	current_info.Address = update_info.Address
+	current_info.Approved = update_info.Approved
 	current_info.WorkingTime = update_info.WorkingTime
 	current_info.Description = update_info.Description
 

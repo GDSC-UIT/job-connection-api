@@ -46,18 +46,24 @@ type Company struct {
 }
 
 type Skill struct {
-	gorm.Model
-	ID   int
-	Name string
+	ID        int            `gorm:"primarykey" json:"id"`
+	Name      string         `json:"name"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 type Job struct {
-	gorm.Model
-	CompanyID   string
-	Title       string
-	Address     string
-	Description string
-	SkillIds    pq.Int64Array `gorm:"type:integer[]"`
+	ID          uint          `gorm:"primarykey" json:"id"`
+	CompanyID   string        `json:"company_id"`
+	Title       string        `json:"title"`
+	Address     string        `json:"address"`
+	Description string        `json:"description"`
+	SkillIds    pq.Int64Array `gorm:"type:integer[]" json:"skill_ids"`
+
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 type ApplyRequest struct {
 	gorm.Model

@@ -14,18 +14,24 @@ func CreateSkill(c *fiber.Ctx) error {
 
 	database.DBInstance.Db.Create(&skill)
 	return c.JSON(json{
-		Data: skill,
+		Data:    skill,
+		Message: "Successfully create skill",
 	})
 }
 
 func GetSkills(c *fiber.Ctx) error {
-	var skills []models.Skill
+	// var skills []models.Skill
 
-	database.DBInstance.Db.Find(&skills)
-	return c.JSON(json{
-		Data: skills,
-	})
+	// database.DBInstance.Db.Find(&skills)
+	// return c.JSON(json{
+	// 	Data: skills,
+	// })
 
+	model := database.DBInstance.Db.Model(&models.Skill{})
+
+	page := pg.With(model).Request(c.Request()).Response(&[]models.Skill{})
+	// pg.Response(model, c.Request(), &[]models.Skill{})
+	return c.JSON(page)
 }
 
 func GetSkill(c *fiber.Ctx) error {
@@ -33,7 +39,6 @@ func GetSkill(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, "Please ensure that: id is an integer")
-
 	}
 
 	var skill models.Skill

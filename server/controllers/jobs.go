@@ -14,20 +14,21 @@ func CreateJob(c *fiber.Ctx) error {
 	database.DBInstance.Db.Create(p)
 	return c.JSON(json{Data: p})
 }
-func GetJobs(c *fiber.Ctx) error{
+func GetJobs(c *fiber.Ctx) error {
 	model := database.DBInstance.Db.Model(&models.Job{})
-	
+
 	page := pg.Response(model, c.Request(), &[]models.Job{})
+
 	return c.JSON(page)
-	
+
 }
-func GetJobByID(c *fiber.Ctx) error{
+func GetJobByID(c *fiber.Ctx) error {
 	id := c.Params("id")
 	job := new(models.Job)
 	database.DBInstance.Db.Where("id = ?", id).First(job)
 	return c.JSON(json{Data: job})
 }
-func UpdateJob(c *fiber.Ctx) error{
+func UpdateJob(c *fiber.Ctx) error {
 	var update_job_info models.Job
 	id := c.Params("id")
 	if err := c.BodyParser(&update_job_info); err != nil {
@@ -49,7 +50,7 @@ func UpdateJob(c *fiber.Ctx) error{
 	if result.Error != nil {
 		return fiber.NewError(fiber.StatusBadRequest, result.Error.Error())
 	}
-	
+
 	return c.JSON(json{
 		Data:    current_job_info,
 		Message: "Informations update successful",
