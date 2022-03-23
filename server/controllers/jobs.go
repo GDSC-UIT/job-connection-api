@@ -4,7 +4,16 @@ import (
 	"github.com/GDSC-UIT/job-connection-api/server/database"
 	"github.com/GDSC-UIT/job-connection-api/server/models"
 	"github.com/gofiber/fiber/v2"
+	pq "github.com/lib/pq"
 )
+
+type CreateJobBody struct {
+	CompanyID   string        `json:"company_id"`
+	Title       string        `json:"title"`
+	Address     string        `json:"address"`
+	Description string        `json:"description"`
+	SkillIds    pq.Int64Array `gorm:"type:integer[]" json:"skill_ids"`
+}
 
 func CreateJob(c *fiber.Ctx) error {
 	p := new(models.Job)
@@ -15,7 +24,7 @@ func CreateJob(c *fiber.Ctx) error {
 	return c.JSON(json{Data: p})
 }
 func GetJobs(c *fiber.Ctx) error {
-	model := database.DBInstance.Db.Model(&models.Job{})
+	model := database.DBInstance.Db.Preload("Company").Model(&models.Job{})
 
 	page := pg.Response(model, c.Request(), &[]models.Job{})
 

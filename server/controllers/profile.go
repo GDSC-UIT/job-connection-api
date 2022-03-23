@@ -73,8 +73,8 @@ func UpdateProfile(c *fiber.Ctx) error {
 
 	accountType := new(models.AccountType)
 	err := database.DBInstance.Db.First(&accountType, "user_id = ?", info.ID).Error
-	if err != nil || accountType.Type == "user" {
-		return fiber.NewError(fiber.StatusInternalServerError, err)
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
 	if accountType.Type == "user" {

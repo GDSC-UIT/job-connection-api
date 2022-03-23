@@ -19,13 +19,11 @@ func CreateApplyRequests(c *fiber.Ctx) error {
 }
 
 func GetApplyRequests(c *fiber.Ctx) error {
-	var applyrequests []models.ApplyRequest
+	model := database.DBInstance.Db.Preload("User").Preload("Job").Model(&models.ApplyRequest{})
 
-	database.DBInstance.Db.Find(&applyrequests)
-	return c.JSON(json{
-		Data: applyrequests,
-	})
+	page := pg.With(model).Request(c.Request()).Response(&[]models.ApplyRequest{})
 
+	return c.JSON(page)
 }
 
 func GetApplyRequest(c *fiber.Ctx) error {

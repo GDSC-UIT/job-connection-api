@@ -32,17 +32,19 @@ type User struct {
 }
 
 type Company struct {
-	ID          string         `json:"id" gorm:"primarykey"`
-	Name        string         `json:"name"`
-	Email       string         `json:"email" gorm:"unique"`
-	Photo       string         `json:"photo"`
-	Address     string         `json:"address"`
-	WorkingTime string         `json:"working_time"`
-	Description string         `json:"description"`
-	Approved    bool           `json:"approved"`
-	CreatedAt   time.Time      `json:"-"`
-	UpdatedAt   time.Time      `json:"-"`
-	DeletedAt   gorm.DeletedAt `gorm:"index" json:"-"`
+	ID          string `json:"id" gorm:"primarykey"`
+	Name        string `json:"name"`
+	Email       string `json:"email" gorm:"unique"`
+	Photo       string `json:"photo"`
+	Address     string `json:"address"`
+	WorkingTime string `json:"working_time"`
+	Description string `json:"description"`
+	Approved    bool   `json:"approved"`
+	Jobs        []Job  `json:"jobs"`
+
+	CreatedAt time.Time      `json:"-"`
+	UpdatedAt time.Time      `json:"-"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 type Skill struct {
@@ -55,6 +57,7 @@ type Skill struct {
 
 type Job struct {
 	ID          uint          `gorm:"primarykey" json:"id"`
+	Company     Company       `json:"company"`
 	CompanyID   string        `json:"company_id"`
 	Title       string        `json:"title"`
 	Address     string        `json:"address"`
@@ -66,13 +69,20 @@ type Job struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 type ApplyRequest struct {
-	gorm.Model
-	UserID    string
-	CompanyID string
-	CV        string
-	Note      string
-	Closed    bool
-	ClosedAt  time.Time
+	ID        uint      `gorm:"primarykey" json:"id"`
+	User      *User     `json:"user"`
+	UserID    string    `json:"user_id"`
+	Job       *Job      `json:"job"`
+	JobID     uint      `json:"job_id"`
+	CompanyID string    `json:"company_id"`
+	CV        string    `json:"cv"`
+	Note      string    `json:"note"`
+	Closed    bool      `json:"closed"`
+	ClosedAt  time.Time `json:"closed_at"`
+
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 type Experience struct {
