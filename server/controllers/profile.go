@@ -102,6 +102,8 @@ func UpdateProfile(c *fiber.Ctx) error {
 		current_profile.GPA = update_profile.GPA
 		current_profile.NumberOfYears = update_profile.NumberOfYears
 		current_profile.Degree = update_profile.Degree
+		current_profile.HardSkillIds = update_profile.HardSkillIds
+		current_profile.SoftSkillIds = update_profile.SoftSkillIds
 
 		result = database.DBInstance.Db.Save(&current_profile)
 		if result.Error != nil {

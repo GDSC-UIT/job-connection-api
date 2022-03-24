@@ -13,18 +13,20 @@ type AccountType struct {
 }
 
 type User struct {
-	ID            string  `gorm:"primarykey" json:"id"`
-	Name          string  `json:"name"`
-	Email         string  `json:"email"  gorm:"unique"`
-	Phone         string  `json:"phone"`
-	Photo         string  `json:"photo"`
-	Bio           string  `json:"bio"`
-	Location      string  `json:"location"`
-	FacebookURL   string  `json:"facebook_url"`
-	LinkedinURL   string  `json:"linkedin_url"`
-	GPA           float64 `json:"gpa"`
-	NumberOfYears int     `json:"number_of_years"`
-	Degree        string  `json:"degree"`
+	ID            string        `gorm:"primarykey" json:"id"`
+	Name          string        `json:"name"`
+	Email         string        `json:"email"  gorm:"unique"`
+	Phone         string        `json:"phone"`
+	Photo         string        `json:"photo"`
+	Bio           string        `json:"bio"`
+	Location      string        `json:"location"`
+	FacebookURL   string        `json:"facebook_url"`
+	LinkedinURL   string        `json:"linkedin_url"`
+	GPA           float64       `json:"gpa"`
+	NumberOfYears int           `json:"number_of_years"`
+	Degree        string        `json:"degree"`
+	HardSkillIds  pq.Int64Array `json:"hard_skill_ids" gorm:"type:integer[]"`
+	SoftSkillIds  pq.Int64Array `json:"soft_skill_ids" gorm:"type:integer[]"`
 
 	CreatedAt time.Time      `json:"-"`
 	UpdatedAt time.Time      `json:"-"`
@@ -87,11 +89,12 @@ type ApplyRequest struct {
 
 type Experience struct {
 	gorm.Model
-	UserID      string
-	CompanyID   string
-	JobTitle    string
-	Description string
-	SkillIds    []int `gorm:"type:integer[]"`
-	From        time.Time
-	To          time.Time
+	UserID      string        `json:"user_id"`
+	Company     Company       `json:"company"`
+	CompanyID   string        `json:"company_id"`
+	JobTitle    string        `json:"job_title"`
+	Description string        `json:"description"`
+	SkillIds    pq.Int64Array `gorm:"type:integer[]" json:"skill_ids"`
+	From        *time.Time    `json:"from"`
+	To          *time.Time    `json:"to"`
 }

@@ -12,16 +12,22 @@ func CreateExperience(c *fiber.Ctx) error {
 		return c.Status(400).JSON(err.Error())
 	}
 
-	database.DBInstance.Db.Create(&experience)
+	result := database.DBInstance.Db.Create(&experience)
+
+	if result.Error != nil {
+		return fiber.NewError(fiber.StatusNotFound, result.Error.Error())
+	}
 	return c.JSON(json{
 		Data: experience,
 	})
 }
 
 func GetExperiences(c *fiber.Ctx) error {
+	user_id := c.Query("user_id")
+
 	var experiences []models.Experience
 
-	database.DBInstance.Db.Find(&experiences)
+	database.DBInstance.Db.Preload("Company").Find(&experiences, "user_id = ?", user_id)
 	return c.JSON(json{
 		Data: experiences,
 	})
