@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"math"
 	"sort"
 
 	"github.com/GDSC-UIT/job-connection-api/server/database"
@@ -87,7 +88,7 @@ func UpdateJob(c *fiber.Ctx) error {
 
 func getRecommenedJobs(experiences []models.Experience, c *fiber.Ctx) error {
 	// page, _ := strconv.Atoi(c.Query("page"))
-	// size := 10
+	size := 10
 
 	experience_titles := ""
 	experience_descriptions := ""
@@ -107,7 +108,8 @@ func getRecommenedJobs(experiences []models.Experience, c *fiber.Ctx) error {
 	})
 
 	return c.JSON(map[string]interface{}{
-		"items": jobs,
+		"items":       jobs,
+		"total_pages": math.Ceil((float64(len(jobs)) / float64(size))),
 	})
 }
 
