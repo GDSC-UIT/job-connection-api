@@ -95,6 +95,6 @@ type Experience struct {
 	JobTitle    string        `json:"job_title"`
 	Description string        `json:"description"`
 	SkillIds    pq.Int64Array `gorm:"type:integer[]" json:"skill_ids"`
-	From        *time.Time    `json:"from"`
-	To          *time.Time    `json:"to"`
+	From        string        `json:"from"`
+	To          string        `json:"to"`
 }

@@ -8,6 +8,6 @@ import "github.com/morkid/paginate"
 var pg = paginate.New(&paginate.Config{})
 
 type json struct {
-	Data	interface{} 	`json:"data"`
-	Message string 			`json:"message,omitempty"`
+	Data    interface{} `json:"data"`
+	Message string      `json:"message,omitempty"`
 }

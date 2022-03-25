@@ -21,6 +21,7 @@ require (
 	cloud.google.com/go/firestore v1.5.0 // indirect
 	cloud.google.com/go/storage v1.12.0 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/deckarep/golang-set v1.8.0 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/google/go-cmp v0.5.4 // indirect
@@ -38,6 +39,7 @@ require (
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/jstemmer/go-junit-report v0.9.1 // indirect
 	github.com/klauspost/compress v1.14.3 // indirect
+	github.com/masatana/go-textdistance v0.0.0-20191005053614-738b0edac985 // indirect
 	github.com/morkid/gocache v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
