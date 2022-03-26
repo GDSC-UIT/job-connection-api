@@ -3,6 +3,7 @@ package controllers
 import (
 	"math"
 	"sort"
+	"strconv"
 
 	"github.com/GDSC-UIT/job-connection-api/server/database"
 	"github.com/GDSC-UIT/job-connection-api/server/middlewares"
@@ -87,7 +88,7 @@ func UpdateJob(c *fiber.Ctx) error {
 }
 
 func getRecommenedJobs(experiences []models.Experience, c *fiber.Ctx) error {
-	// page, _ := strconv.Atoi(c.Query("page"))
+	page, _ := strconv.Atoi(c.Query("page"))
 	size := 10
 
 	experience_titles := ""
@@ -108,7 +109,7 @@ func getRecommenedJobs(experiences []models.Experience, c *fiber.Ctx) error {
 	})
 
 	return c.JSON(map[string]interface{}{
-		"items":       jobs,
+		"items":       jobs[page*size : (page+1)*size-1],
 		"total_pages": math.Ceil((float64(len(jobs)) / float64(size))),
 	})
 }
