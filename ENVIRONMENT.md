@@ -2,29 +2,35 @@
 
 [Docs](https://firebase.google.com/docs/admin/setup?authuser=0#go)
 
-Tạo ứng dụng firebase
+Create firebase project
 
-Thêm provider `Email/Password` và `Google`
+Add provider `Email/Password` and `Google`
 ![provider](https://i.imgur.com/lxCAzKX.png)
-Cài đặt chức năng `Storage` ở chế độ `test`
+Set up `Storage` in `test mod`
 ![Imgur](https://i.imgur.com/y69th6l.png)
 ![Imgur](https://i.imgur.com/qIXHB9w.png)
-Lấy private key của ứng dụng
+Generate new private key
 ![Imgur](https://i.imgur.com/LzG14RX.png)
-Xóa kí tự xuống dòng rồi copy nội dung vào file `.env`
+Remove `\n` character in private key
 ![Imgur](https://i.imgur.com/wBbL3V5.png)
+
+Update `.env` variable
+
+```bash
+JC_FIREBASE_SERVICE_ACCOUNT = {"type":"service_account","project_id":"job-connection-b4340","private_key_id":"______","private_key":"-----BEGIN PRIVATE KEY-----.......}
+```
 
 ## DATABASE_URL
 
-[Cài đặt Docker](https://docs.docker.com/get-started/)
+[install Docker](https://docs.docker.com/get-started/)
 
-Chạy docker container được cấu hình trong `docker-compose.yml`
+Run database container
 
 ```bash
 docker compose up -d
 ```
 
-Cập nhật giá trị của biến môi trường
+Update `.env` variable
 
 ```bash
 DATABASE_URL = postgres://postgres:postgres@localhost:5432/postgres
